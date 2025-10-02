@@ -5,7 +5,7 @@ class Asignatura:
 
     @property
     def mostrarId(self):
-        return self.__id
+        return {'Asignatura:':self.__nombre, 'ID': slef.__id}
     
     @property
     def mostrarNombre(self):
@@ -75,7 +75,6 @@ class Estudiante:
     def __init__(self,asignaturas:list[Asignatura]):
         self.__asignaturas:list[Asignatura] = asignaturas
     
-    
     @property
     def _mostrarPerfil(self):
         return {'Nombre':self._nombre,'RUT':self._rut,'Correo': self._correo}
@@ -85,6 +84,23 @@ class Estudiante:
         return id
     
     @classmethod
-    def recibirEvaluacion(self,nota):
+    def recibirEvaluacion(self):
         return Evaluacion
     
+##########################################################################
+
+class Docente:
+    def __init__(self,asignaturas:list[Asignatura]):
+        self.__asignaturas:list[Asignatura] = asignaturas
+
+    @property
+    def _mostrarPerfil(self):
+        return {'Nombre':self._nombre,'RUT':self._rut,'Correo': self._correo}
+    
+    @classmethod
+    def dictarAsignatura(self,id):
+        return id
+
+    @classmethod
+    def evaluarAlumno(self,nota):
+        Evaluacion.obtenerEvaluacion(self,nota)
