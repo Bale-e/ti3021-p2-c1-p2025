@@ -15,7 +15,6 @@ class Asignatura:
     def mostrarAsignatura(self):
         return { 'id': self.__id, 'nombre': self.__nombre }
 
-#########################################################################
 
 class Evaluacion:
     def __init__(self, nota: int, asignatura:Asignatura):
@@ -24,13 +23,16 @@ class Evaluacion:
 
     @property
     def mostrarNota(self):
-        return {'Nota': self.__nota}
+        return self.__nota
+
+    @property
+    def mostrarAsignatura(self):
+        return self.__asignatura
 
     @classmethod
     def obtenerEvaluacion(self,nota):
         self.__nota = nota
 
-##########################################################################
 
 class Usuario:
     def __init__(self, nombre:str, rut:str, correo:str):
@@ -54,7 +56,6 @@ class Usuario:
     def correo(self,correo:str):
         self._corre = correo
 
-#########################################################################
 
 class Administrativo(Usuario):
     def __init__(self,nombre:str, rut:str, correo:str):
@@ -72,12 +73,12 @@ class Administrativo(Usuario):
     def gestionarMatricula(self,id):
         return self
     
-##########################################################################
     
 class Estudiante(Usuario):
     def __init__(self,asignaturas:list[Asignatura],nombre:str, rut:str, correo:str):
         super().__init__(nombre=nombre,rut=rut,correo=correo)
         self.__asignaturas:list[Asignatura] = asignaturas
+        self.__evaluaciones: list[Evaluacion] = []
         
     @property
     def _mostrarPerfil(self):
@@ -87,11 +88,10 @@ class Estudiante(Usuario):
     def inscribirAsignatura(self,id):
         return id
     
-    @classmethod
-    def recibirEvaluacion(self):
-        return Evaluacion
+    def recibirEvaluacion(self,evaluacion:Evaluacion):
+        print(f'{self._rut} ha recibido una evaluación del ramo {evaluacion.mostrarAsignatura} con nota {evaluacion.mostrarNota}')
+        self.__evaluaciones.append(evaluacion)
     
-##########################################################################
 
 class Docente(Usuario):
     def __init__(self,asignaturas:list[Asignatura],nombre:str, rut:str, correo:str):
@@ -107,5 +107,7 @@ class Docente(Usuario):
         return id
 
     @classmethod
-    def evaluarAlumno(self,nota):
-        Evaluacion.obtenerEvaluacion(self,nota)
+    def evaluarAlumno(self, alumno: Estudiante, nota, asignatura):
+        evaluacion = Evaluacion(nota,asignatura)
+        alumno.recibirEvaluacion(evaluacion)
+
