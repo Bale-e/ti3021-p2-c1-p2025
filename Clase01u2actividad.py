@@ -56,7 +56,10 @@ class Usuario:
 
 #########################################################################
 
-class Administrativo:
+class Administrativo(Usuario):
+    def __init__(self,nombre:str, rut:str, correo:str):
+        super().__init__(nombre=nombre,rut=rut,correo=correo)
+
     @property
     def _mostrarPerfil(self):
         return {'Nombre':self._nombre,'RUT':self._rut,'Correo': self._correo}
@@ -71,10 +74,11 @@ class Administrativo:
     
 ##########################################################################
     
-class Estudiante:
-    def __init__(self,asignaturas:list[Asignatura]):
+class Estudiante(Usuario):
+    def __init__(self,asignaturas:list[Asignatura],nombre:str, rut:str, correo:str):
+        super().__init__(nombre=nombre,rut=rut,correo=correo)
         self.__asignaturas:list[Asignatura] = asignaturas
-    
+        
     @property
     def _mostrarPerfil(self):
         return {'Nombre':self._nombre,'RUT':self._rut,'Correo': self._correo}
@@ -89,10 +93,11 @@ class Estudiante:
     
 ##########################################################################
 
-class Docente:
-    def __init__(self,asignaturas:list[Asignatura]):
+class Docente(Usuario):
+    def __init__(self,asignaturas:list[Asignatura],nombre:str, rut:str, correo:str):
+        super().__init__(nombre=nombre,rut=rut,correo=correo)
         self.__asignaturas:list[Asignatura] = asignaturas
-
+    
     @property
     def _mostrarPerfil(self):
         return {'Nombre':self._nombre,'RUT':self._rut,'Correo': self._correo}
